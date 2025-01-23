@@ -9,6 +9,9 @@ export default function Labs() {
         <div>
       <h1>Labs</h1>
       <h2>Amy Baez | CS4500</h2>
+      <div>
+        <a href="https://github.com/amyb25/kambaz-react-web-app" id="wd-github">Github Repo</a><br />
+      </div>
       
       <TOC />
       <Routes>
