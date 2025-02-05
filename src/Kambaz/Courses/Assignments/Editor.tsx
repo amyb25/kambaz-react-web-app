@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, Col, FormCheck, FormControl, FormGroup, FormLabel, FormSelect, Row } from "react-bootstrap";
+import { Button, Card, Col, FormCheck, FormControl, FormGroup, FormLabel, FormSelect, Row } from "react-bootstrap";
 
 export default function AssignmentEditor() {
     return (

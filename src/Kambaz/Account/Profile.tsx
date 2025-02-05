@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FormControl, FormGroup, FormLabel } from "react-bootstrap";
+import { FormControl, FormGroup} from "react-bootstrap";
 export default function Profile() {
     return (
         <div id="wd-profile-screen">
