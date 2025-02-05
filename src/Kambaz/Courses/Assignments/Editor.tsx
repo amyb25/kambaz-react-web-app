@@ -1,117 +1,127 @@
+import { Button, Card, CardBody, Col, FormCheck, FormControl, FormGroup, FormLabel, FormSelect, Row } from "react-bootstrap";
+
 export default function AssignmentEditor() {
     return (
         <div id="wd-assignments-editor">
-            <label htmlFor="wd-name">Assignment Name</label>
-            <input id="wd-name" value="A1 - ENV + HTML" /><br /><br />
-            <textarea id="wd-description">
-                The assignment is available online Submit a link to the landing page of
-            </textarea>
+            <FormGroup className="wd-name">
+                <FormLabel>Assignment Name</FormLabel>
+                <FormControl type="text" placeholder="Enter assignment name"></FormControl>
+            </FormGroup> <br />
+
+            <FormGroup className="wd-description">
+                <FormControl as="textarea" placeholder="Enter assignment description" />
+            </FormGroup>
             <br />
-            <table>
-                <tr>
-                    <td align="right" valign="top">
-                        <label htmlFor="wd-points">Points</label>
-                    </td>
-                    <td>
-                        <input id="wd-points" value={100} />
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right" valign="top">
-                        <label htmlFor="wd-group">Assignment Group</label>
-                    </td>
-                    <td>
-                        <select id="wd-select-one-assignment">
-                            <option value="HOMEWORK">HOMEWORK</option>
-                            <option value="ESSAY">ESSAY</option>
-                            <option selected value="ASSIGNMENT">ASSIGNMENT</option>
-                            <option value="EXAM">EXAM</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right" valign="top">
-                        <label htmlFor="wd-display-grade-as">Display Grade as</label>
-                    </td>
-                    <td>
-                        <select id="wd-select-one-grade-format">
-                            <option selected value="PERCENTAGE">Percentage</option>
-                            <option value="LETTER">Letter Grade</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right" valign="top">
-                        <label htmlFor="wd-submission-type">Submission Type</label>
-                    </td>
-                    <td>
-                        <select id="wd-select-one-submission-type">
-                            <option selected value="ONLINE">Online</option>
-                            <option value="ONPAPER">On Paper</option>
-                            <option value="EXTOOL">External Tool</option>
-                        </select>
-                    </td>
-                </tr><br />
-                <tr>
-                    <td align="right" valign="top">
-                        <label htmlFor="wd-online-entry-options">Online Entry Options</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" name="check-entry-options" id="wd-text-entry" />
-                        <label htmlFor="wd-text-entry">Text Entry</label><br />
 
-                        <input type="checkbox" name="check-entry-options" id="wd-website-url" />
-                        <label htmlFor="wd-website-url">Website URL</label><br />
+            <Row>
+                <Col md={10}>
+                    <FormGroup as={Row} className="wd-points">
+                        {/* Label aligned to the left of the input */}
+                        <FormLabel column sm={2}>Points</FormLabel>
+                        <Col sm={6}>
+                            <FormControl type="number" defaultValue={100} />
+                        </Col>
+                    </FormGroup>
+                </Col>
+            </Row>
+            <br />
 
-                        <input type="checkbox" name="check-entry-options" id="wd-media-recordings" />
-                        <label htmlFor="wd-media-recordings">Media Recordings</label><br />
+            <Row>
+                <Col md={10}>
+                    <FormGroup as={Row} className="wd-group">
+                        <FormLabel column sm={2}>Assignment Group</FormLabel>
+                        <Col sm={6}>
+                            <FormSelect>
+                                <option selected>ASSIGNMENTS</option>
+                                <option value="homework">HOMEWORK</option>
+                                <option value="essay">ESSAY</option>
+                                <option value="exam">EXAM</option>
+                            </FormSelect>
+                        </Col>
+                    </FormGroup>
+                </Col>
+            </Row> <br />
 
-                        <input type="checkbox" name="check-entry-options" id="wd-student-annotation" />
-                        <label htmlFor="wd-student-annotation">Student Annotation</label><br />
+            <Row>
+                <Col md={10}>
+                    <FormGroup as={Row} className="wd-display-grade-as">
+                        <FormLabel column sm={2}>Display Grade as</FormLabel>
+                        <Col sm={6}>
+                            <FormSelect>
+                                <option selected>Percentage</option>
+                                <option value="letter-grade">Letter Grade</option>
+                            </FormSelect>
+                        </Col>
+                    </FormGroup>
+                </Col>
+            </Row> <br />
 
-                        <input type="checkbox" name="check-entry-options" id="wd-file-upload" />
-                        <label htmlFor="wd-file-upload">File Uploads</label>
-                    </td>
-                </tr><br />
-                <tr>
-                    <td align="center" valign="top">
-                        <label htmlFor="wd-assign-to">Assign to</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">
-                        <input type="text" id="wd-assign-to" placeholder="Everyone" />
-                    </td>
-                </tr><br />
-                <tr>
-                    <td align="right" valign="top">
-                        <label htmlFor="wd-due-date">Due Date</label>
-                    </td>
-                    <input type="date"
-                        value="2024-01-21"
-                        id="wd-due-date" /><br />
-                </tr><br />
-                <tr>
-                    <td align="right" valign="top">
-                        <label htmlFor="wd-available-from">Available From</label>
-                    </td>
-                    <td>
-                        <input type="date"
-                            value="2024-01-21"
-                            id="wd-available-from" />
-                    </td>
-                    <td align="right" valign="top">
-                        <label htmlFor="wd-available-until">Until</label>
-                    </td>
-                    <td>
-                        <input type="date"
-                            value="2024-02-29"
-                            id="wd-available-until" />
-                    </td><br />
-                </tr>
-            </table>
+            <Row>
+                <Col md={10}>
+                    <FormGroup as={Row} className="wd-submission-type">
+                        <FormLabel column sm={2}>Submission Type</FormLabel>
+                        <Col sm={6}>
+                            <Card className="mb-4">
+                                <Card.Body>
+                                    <FormSelect>
+                                        <option selected>Online</option>
+                                        <option value="on-paper">On Paper</option>
+                                        <option value="extool">External Tool</option>
+                                    </FormSelect> <br />
+                                    <FormGroup as={Row} className="wd-online-entry-options">
+                                        <FormLabel> <strong>Online Entry Options</strong></FormLabel>
+                                        <FormCheck type="checkbox" label="Text Entry" />
+                                        <FormCheck type="checkbox" label="Website URL" />
+                                        <FormCheck type="checkbox" label="Media Recordings" />
+                                        <FormCheck type="checkbox" label="Student Annotation" />
+                                        <FormCheck type="checkbox" label="File Uploads" />
+                                    </FormGroup>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </FormGroup>
+                </Col>
+            </Row> <br />
+
+            <Row>
+                <Col md={10}>
+                    <FormGroup as={Row} className="wd-assign">
+                        <FormLabel column sm={2}>Assign</FormLabel>
+                        <Col sm={6}>
+                            <Card className="mb-4">
+                                <Card.Body>
+                                    <FormLabel><strong>Assign To</strong></FormLabel>
+                                    <FormControl type="text" placeholder="Everyone" /> <br />
+                                    <FormLabel><strong>Due</strong></FormLabel>
+                                    <FormControl type="datetime-local" /> <br />
+                                    <Row>
+                                        <Col sm={6}>
+                                            <FormLabel><strong>Available From</strong></FormLabel>
+                                            <FormControl type="datetime-local" />
+                                        </Col>
+                                        <Col sm={6}>
+                                            <FormLabel><strong>Until</strong></FormLabel>
+                                            <FormControl type="datetime-local" />
+                                        </Col>
+                                    </Row>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </FormGroup>
+                </Col>
+            </Row>
+            {/* Buttons for save and cancel */}
+            <Row>
+                <Col md={12} className="d-flex justify-content-end">
+                <Button variant="secondary" className="mr-3">
+              Cancel
+            </Button>
+            <Button variant="danger">
+              Save
+            </Button>
+                </Col>
+            </Row>
         </div>
+
     );
 }

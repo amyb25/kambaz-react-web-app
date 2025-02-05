@@ -282,7 +282,6 @@ export default function Lab1() {
         <a href="https://github.com/amyb25/kambaz-react-web-app" id="wd-github">click here</a>
         for repo<br />
       </div>
-
     </div>
   );
 }
