@@ -1,15 +1,19 @@
 import { Button, Card, Col, FormCheck, FormControl, FormGroup, FormLabel, FormSelect, Row } from "react-bootstrap";
+import { useParams } from "react-router";
+import * as db from "../../Database";
 
 export default function AssignmentEditor() {
+    const { aid } = useParams();
+    const assignment = db.assignments.find((assignment) => assignment._id === aid);
     return (
         <div id="wd-assignments-editor">
             <FormGroup className="wd-name">
                 <FormLabel>Assignment Name</FormLabel>
-                <FormControl type="text" placeholder="Enter assignment name"></FormControl>
+                <FormLabel className="form-control">{assignment?.title}</FormLabel>
             </FormGroup> <br />
 
             <FormGroup className="wd-description">
-                <FormControl as="textarea" placeholder="Enter assignment description" />
+            <FormLabel className="form-control">{assignment?.description}</FormLabel>
             </FormGroup>
             <br />
 
@@ -19,7 +23,7 @@ export default function AssignmentEditor() {
                         {/* Label aligned to the left of the input */}
                         <FormLabel column sm={2}>Points</FormLabel>
                         <Col sm={6}>
-                            <FormControl type="number" defaultValue={100} />
+                        <FormLabel className="form-control">{assignment?.points}</FormLabel>
                         </Col>
                     </FormGroup>
                 </Col>

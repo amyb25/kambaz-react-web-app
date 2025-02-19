@@ -12,6 +12,12 @@ body * {  font-family: Arial, Helvetica, sans-serif;  }
     background-color: white;
     border-left: 3px solid black !important;
   }
+
+  .list-group.wd > .list-group-item.active {
+    color: black;
+    background-color: white;
+    border-left: 3px solid black !important;
+  }
   
   .btn-secondary {
     --bs-btn-color: #000 !important;
