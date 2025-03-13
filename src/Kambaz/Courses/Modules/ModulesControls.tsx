@@ -1,11 +1,23 @@
+import ModuleEditor from "./ModuleEditor";
 import { FaPlus } from "react-icons/fa6";
 import GreenCheckmark from "./GreenCheckmark";
 import { Button, Dropdown } from "react-bootstrap";
 import { FaBan } from "react-icons/fa6";
-export default function ModulesControls() {
+import { useState } from "react";
+import { FaPencil } from "react-icons/fa6";
+export default function ModulesControls(
+    { moduleName, setModuleName, addModule }:
+{ moduleName: string; setModuleName: (title: string) => void; addModule: () => void; }) {
+ const [show, setShow] = useState(false);
+ const handleClose = () => setShow(false);
+ const handleShow = () => setShow(true); {
+ const [show, setShow] = useState(false);
+ const handleClose = () => setShow(false);
+ const handleShow = () => setShow(true);}
     return (
         <div id="wd-modules-controls" className="text-nowrap">
-            <Button variant="danger" size="lg" className="me-1 float-end" id="wd-add-module-btn">
+            <Button variant="danger" size="lg" className="me-1 float-end" id="wd-add-module-btn"
+             onClick={handleShow} >
                 <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
                 Module
             </Button>
@@ -39,6 +51,8 @@ export default function ModulesControls() {
                 <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
                 Collapse All
             </Button>
+            <ModuleEditor show={show} handleClose={handleClose} dialogTitle="Add Module"
+       moduleName={moduleName} setModuleName={setModuleName} addModule={addModule} />
         </div>
     );
 }
