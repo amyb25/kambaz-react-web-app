@@ -4,16 +4,17 @@ import GreenCheckmark from "./GreenCheckmark";
 import { Button, Dropdown } from "react-bootstrap";
 import { FaBan } from "react-icons/fa6";
 import { useState } from "react";
-import { FaPencil } from "react-icons/fa6";
+//import { FaPencil } from "react-icons/fa6";
 export default function ModulesControls(
     { moduleName, setModuleName, addModule }:
 { moduleName: string; setModuleName: (title: string) => void; addModule: () => void; }) {
  const [show, setShow] = useState(false);
  const handleClose = () => setShow(false);
  const handleShow = () => setShow(true); {
- const [show, setShow] = useState(false);
- const handleClose = () => setShow(false);
- const handleShow = () => setShow(true);}
+ //const [show, setShow] = useState(false);
+ //const handleClose = () => setShow(false);
+ //const handleShow = () => setShow(true);
+ }
     return (
         <div id="wd-modules-controls" className="text-nowrap">
             <Button variant="danger" size="lg" className="me-1 float-end" id="wd-add-module-btn"

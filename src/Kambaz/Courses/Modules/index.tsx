@@ -3,7 +3,7 @@ import ModuleControlButtons from "./ModuleControlButtons";
 import ModulesControls from "./ModulesControls";
 import { BsGripVertical } from "react-icons/bs";
 import { useParams } from "react-router";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormControl, ListGroup } from "react-bootstrap";
 import { addModule, editModule, updateModule, deleteModule }
     from "./reducer";
@@ -25,7 +25,7 @@ export default function Modules() {
             <ListGroup id="wd-modules" className="rounded-0">
                 {modules
                     .filter((module: any) => module.course === cid)
-                    .map((module: any, idx: number) => (
+                    .map((module: any, _idx: number) => (
                         <li
                             className="wd-module list-group-item p-0 mb-5 fs-5 border-gray"
                             key={module._id}
