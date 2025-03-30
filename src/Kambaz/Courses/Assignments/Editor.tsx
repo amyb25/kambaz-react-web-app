@@ -1,117 +1,214 @@
-export default function AssignmentEditor() {
-    return (
-        <div id="wd-assignments-editor">
-            <label htmlFor="wd-name">Assignment Name</label>
-            <input id="wd-name" value="A1 - ENV + HTML" /><br /><br />
-            <textarea id="wd-description">
-                The assignment is available online Submit a link to the landing page of
-            </textarea>
-            <br />
-            <table>
-                <tr>
-                    <td align="right" valign="top">
-                        <label htmlFor="wd-points">Points</label>
-                    </td>
-                    <td>
-                        <input id="wd-points" value={100} />
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right" valign="top">
-                        <label htmlFor="wd-group">Assignment Group</label>
-                    </td>
-                    <td>
-                        <select id="wd-select-one-assignment">
-                            <option value="HOMEWORK">HOMEWORK</option>
-                            <option value="ESSAY">ESSAY</option>
-                            <option selected value="ASSIGNMENT">ASSIGNMENT</option>
-                            <option value="EXAM">EXAM</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right" valign="top">
-                        <label htmlFor="wd-display-grade-as">Display Grade as</label>
-                    </td>
-                    <td>
-                        <select id="wd-select-one-grade-format">
-                            <option selected value="PERCENTAGE">Percentage</option>
-                            <option value="LETTER">Letter Grade</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right" valign="top">
-                        <label htmlFor="wd-submission-type">Submission Type</label>
-                    </td>
-                    <td>
-                        <select id="wd-select-one-submission-type">
-                            <option selected value="ONLINE">Online</option>
-                            <option value="ONPAPER">On Paper</option>
-                            <option value="EXTOOL">External Tool</option>
-                        </select>
-                    </td>
-                </tr><br />
-                <tr>
-                    <td align="right" valign="top">
-                        <label htmlFor="wd-online-entry-options">Online Entry Options</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" name="check-entry-options" id="wd-text-entry" />
-                        <label htmlFor="wd-text-entry">Text Entry</label><br />
+import {  Form, FormControl, FormSelect } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { updateAssignment, addAssignment }
+     from "./reducer";
+     import { v4 as uuidv4 } from "uuid";
+import SaveButton2 from "./SaveButton2";
+// {addAssignment}: {addAssignment:()=>void;}
 
-                        <input type="checkbox" name="check-entry-options" id="wd-website-url" />
-                        <label htmlFor="wd-website-url">Website URL</label><br />
+export default function AssignmentEditor(
+) {
 
-                        <input type="checkbox" name="check-entry-options" id="wd-media-recordings" />
-                        <label htmlFor="wd-media-recordings">Media Recordings</label><br />
+     const { cid, aid } = useParams();
+     const dispatch = useDispatch();
+     // const assignments = db.assignments;
+     const [assignmentTitle, setAssignmentTitle] = useState("");
+     const [assignmentDes, setAssignmentDes] = useState("");
+     const [assignmentPoints, setAssignmentPoints] = useState("");
+     const [dueDate, setDueDate] = useState("");
+     const [from, setFrom] = useState("");
+     const [until, setUntil] = useState("");
+     const { assignments } = useSelector((state: any) => state.assignmentReducer);
+     // const navigate = useNavigate();
 
-                        <input type="checkbox" name="check-entry-options" id="wd-student-annotation" />
-                        <label htmlFor="wd-student-annotation">Student Annotation</label><br />
+        console.log("addAssignment:", addAssignment);
 
-                        <input type="checkbox" name="check-entry-options" id="wd-file-upload" />
-                        <label htmlFor="wd-file-upload">File Uploads</label>
-                    </td>
-                </tr><br />
-                <tr>
-                    <td align="center" valign="top">
-                        <label htmlFor="wd-assign-to">Assign to</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">
-                        <input type="text" id="wd-assign-to" placeholder="Everyone" />
-                    </td>
-                </tr><br />
-                <tr>
-                    <td align="right" valign="top">
-                        <label htmlFor="wd-due-date">Due Date</label>
-                    </td>
-                    <input type="date"
-                        value="2024-01-21"
-                        id="wd-due-date" /><br />
-                </tr><br />
-                <tr>
-                    <td align="right" valign="top">
-                        <label htmlFor="wd-available-from">Available From</label>
-                    </td>
-                    <td>
-                        <input type="date"
-                            value="2024-01-21"
-                            id="wd-available-from" />
-                    </td>
-                    <td align="right" valign="top">
-                        <label htmlFor="wd-available-until">Until</label>
-                    </td>
-                    <td>
-                        <input type="date"
-                            value="2024-02-29"
-                            id="wd-available-until" />
-                    </td><br />
-                </tr>
-            </table>
-        </div>
-    );
+        const handleUpdateAssignment = () => {
+          const newAssignment = {
+            _id:aid || uuidv4(), 
+            title: assignmentTitle,
+            course: cid,
+            description: assignmentDes, 
+            points: assignmentPoints, 
+            dueDate: dueDate, 
+            getAvailableFrom: from, 
+            getAvailableUntil: until, 
+            assignment: aid,
+          };
+          // updateAssignment();
+          // if (assignments) {
+          //      dispatch(updateAssignment(newAssignment));
+          //    } else {
+          //      dispatch(addAssignment(newAssignment)); 
+          //    }
+          dispatch(updateAssignment(newAssignment));
+         
+        };
+        useEffect(() => {
+          const assignment = assignments.find((a: any) => a._id === aid);
+          if (assignment) {
+            setAssignmentTitle(assignment.title);
+            setAssignmentDes(assignment.description);
+            setAssignmentPoints(assignment.points);
+            setDueDate(assignment.dueDate);
+            setFrom(assignment.getAvailableFrom);
+            setUntil(assignment.getAvailableUntil);
+          }
+        }, [assignments, aid]);
+
+     return (
+          <div>
+               <div id="wd-assignments-editor" className="bring-over">
+                    <h3>
+                         <label htmlFor="wd-name">Assignment Name</label></h3>
+                    <FormControl type="text" onChange={(e) => setAssignmentTitle(e.target.value)} value={assignmentTitle} placeholder={assignments?.title} /> <br />
+                    <FormControl as="textarea" rows={14} placeholder={assignmentDes}  onChange={(e) => setAssignmentDes(e.target.value)}/>
+                    <table>
+                         <br />
+                         <br /><tr><td valign="top" align="right" >
+                              <label htmlFor="wd-points">Points</label></td>
+                              <td><FormControl type="text" className="center-box" value={assignmentPoints} onChange={(e) => setAssignmentPoints(e.target.value)}/>
+                              </td>
+                         </tr><br /><tr>
+                              <td align="right" valign="top"><label htmlFor="wd-group">Assignment Group</label>
+                              </td>
+                              
+
+                              <td><FormSelect className="center-box" >
+                                   <option selected>ASSIGNMENTS</option>
+                                   <option value="1">One</option>
+                                   <option value="2">Two</option>
+                                   <option value="3">Three</option>
+                              </FormSelect>
+                              </td>
+                         </tr>
+                         <br />
+                         <tr>
+                              <td align="right" valign="top">
+                                   <label htmlFor="wd-display-grade-as">Display Grade as</label>
+                              </td>
+                              <td><FormSelect className="center-box" >
+                                   <option selected>Percentage</option>
+                                   <option value="1">Letter</option>
+                                   <option value="2">Number</option>
+                              </FormSelect>
+                              </td>
+                         </tr>
+                         <br />
+
+
+                         <tr>
+                              <td align="right" valign="top" >
+                                   <label htmlFor="wd-submission-type" >Submission Type</label>
+                              </td>
+                              <div className="card move-card h-100">
+                                   <div className="center-container"> <FormSelect className="small-dropdown">
+                                        <option selected>Online</option>
+                                        <option value="1">Paper</option>
+                                        <option value="2">InPerson</option>
+                                   </FormSelect></div>
+
+                                   <br />
+                                   <div className="center-box-next">
+                                        <td align="left" valign="top">
+                                             <label htmlFor="wd-text-entry">Online Entry Options</label><br /><br />
+
+                                             <Form>
+                                                  <Form.Check
+                                                       type="checkbox"
+                                                       label="Text Entry"
+                                                       id="wd-text-entry"
+                                                  /><br />
+                                                  <Form.Check
+                                                       type="checkbox"
+                                                       label="Website URL"
+                                                       id="wd-website-url"
+                                                  /><br />
+                                                  <Form.Check
+                                                       type="checkbox"
+                                                       label="Media Recordings"
+                                                       id="wd-media-recordings"
+                                                  /><br />
+                                                  <Form.Check
+                                                       type="checkbox"
+                                                       label="Student Annotation"
+                                                       id="wd-student-annotation"
+                                                  /><br />
+                                                  <Form.Check
+                                                       type="checkbox"
+                                                       label="File Uploads"
+                                                       id="wd-file-upload"
+                                                  /><br />
+                                             </Form>
+                                        </td>
+                                   </div>
+
+
+                              </div>
+
+                         </tr>
+
+
+                         <br />
+
+
+                         <tr>
+                              <td align="right" valign="top">
+                                   <label htmlFor="wd-assign-to">Assign</label>
+                              </td>
+                         </tr>
+                         <div className="card move-card-2 h-100"> <br />
+                              <td className="center-box-next">
+                                   <label htmlFor="wd-assign-to">Assign To</label><br />
+                                   <td className="small-dropdown-2"><FormControl className="small-dropdown-2" type="text" value="Everyone" />
+                                   </td>
+
+                              </td>
+                              <tr>
+                                   {/* <td className="center-box-next"></td> */}
+                                   <td className="center-box-next"><br />
+                                        <label htmlFor="wd-due-date">Due</label><br />
+                                        <div className="small-dropdown-2"><FormControl value={dueDate} className="small-dropdown-2" type="date" onChange={(e) => setDueDate(e.target.value)} id="wd-due-date" /></div>
+                                        <br />
+                                   </td>
+
+                              </tr>
+                              <tr>
+
+                                   <td className="center-box-next">
+                                        <label htmlFor="wd-available-from">Available from</label> <br />
+                                        <div className="half-size"> <FormControl type="date" value={from} onChange={(e) => setFrom(e.target.value)} id="wd-available-from" /><br /> </div>
+
+
+                                   </td >
+                                   <td className="center-box-next">
+                                        <label htmlFor="wd-available-until">Until</label> <br />
+                                        <div className="half-size"> <FormControl type="date" value={until} onChange={(e) => setUntil(e.target.value)} id="wd-available-until" /><br /></div>
+
+                                   </td>
+                              </tr>
+
+                         </div>
+
+
+                    </table>
+
+                    <hr />
+                    <table width="100%" ><tr>
+                         <td align="right" style={{ display: "flex-right", gap: "5px", justifyContent: "flex-end" }}>
+                              <Link className="btn btn-lg btn-secondary" id="wd-add-module-btn" to={`/Kambaz/Courses/${cid}/Assignments`}>
+
+                                   Cancel
+                              </Link> &nbsp;
+                              
+                              <SaveButton2 updateAssignment={handleUpdateAssignment} />
+                         </td>
+                    </tr></table>
+
+               </div>
+
+          </div>
+     );
 }
