@@ -1,17 +1,19 @@
 import {  Form, FormControl, FormSelect } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
+// import * as db from "../../Databases";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { updateAssignment, addAssignment }
+import { useState } from "react";
+import {  addAssignment }
      from "./reducer";
      import { v4 as uuidv4 } from "uuid";
-import SaveButton2 from "./SaveButton2";
+import SaveButton from "./SaveButton";
 // {addAssignment}: {addAssignment:()=>void;}
 
-export default function AssignmentEditor(
+
+export default function AddAssignmentEditor(
 ) {
 
-     const { cid, aid } = useParams();
+     const { cid } = useParams();
      const dispatch = useDispatch();
      // const assignments = db.assignments;
      const [assignmentTitle, setAssignmentTitle] = useState("");
@@ -22,12 +24,12 @@ export default function AssignmentEditor(
      const [until, setUntil] = useState("");
      const { assignments } = useSelector((state: any) => state.assignmentReducer);
      // const navigate = useNavigate();
-
+     
         console.log("addAssignment:", addAssignment);
 
-        const handleUpdateAssignment = () => {
+        const handleAddAssignment = () => {
           const newAssignment = {
-            _id:aid || uuidv4(), 
+            _id: uuidv4(), 
             title: assignmentTitle,
             course: cid,
             description: assignmentDes, 
@@ -35,28 +37,14 @@ export default function AssignmentEditor(
             dueDate: dueDate, 
             getAvailableFrom: from, 
             getAvailableUntil: until, 
-            assignment: aid,
           };
-          // updateAssignment();
-          // if (assignments) {
-          //      dispatch(updateAssignment(newAssignment));
-          //    } else {
-          //      dispatch(addAssignment(newAssignment)); 
-          //    }
-          dispatch(updateAssignment(newAssignment));
-         
+          //  if (assignments) {
+               //      dispatch(updateAssignment(newAssignment));
+               //    } else {
+                    dispatch(addAssignment(newAssignment)); 
+               //    }
+          // dispatch(addAssignment(newAssignment));
         };
-        useEffect(() => {
-          const assignment = assignments.find((a: any) => a._id === aid);
-          if (assignment) {
-            setAssignmentTitle(assignment.title);
-            setAssignmentDes(assignment.description);
-            setAssignmentPoints(assignment.points);
-            setDueDate(assignment.dueDate);
-            setFrom(assignment.getAvailableFrom);
-            setUntil(assignment.getAvailableUntil);
-          }
-        }, [assignments, aid]);
 
      return (
           <div>
@@ -202,8 +190,8 @@ export default function AssignmentEditor(
 
                                    Cancel
                               </Link> &nbsp;
-                              
-                              <SaveButton2 updateAssignment={handleUpdateAssignment} />
+                             
+                              <SaveButton addAssignment={handleAddAssignment} />
                          </td>
                     </tr></table>
 
