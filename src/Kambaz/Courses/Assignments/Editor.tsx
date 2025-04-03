@@ -25,26 +25,37 @@ export default function AssignmentEditor(
 
         console.log("addAssignment:", addAssignment);
 
+     //    const handleUpdateAssignment = () => {
+     //      const newAssignment = {
+     //        _id:aid || uuidv4(), 
+     //        title: assignmentTitle,
+     //        course: cid,
+     //        description: assignmentDes, 
+     //        points: assignmentPoints, 
+     //        dueDate: dueDate, 
+     //        getAvailableFrom: from, 
+     //        getAvailableUntil: until, 
+     //        assignment: aid,
+     //      };
+     //      dispatch(updateAssignment(newAssignment));
+     //    };
         const handleUpdateAssignment = () => {
           const newAssignment = {
-            _id:aid || uuidv4(), 
+            _id: aid || uuidv4(),
             title: assignmentTitle,
             course: cid,
-            description: assignmentDes, 
-            points: assignmentPoints, 
-            dueDate: dueDate, 
-            getAvailableFrom: from, 
-            getAvailableUntil: until, 
-            assignment: aid,
+            description: assignmentDes,
+            points: assignmentPoints,
+            dueDate: dueDate,
+            getAvailableFrom: from,
+            getAvailableUntil: until,
           };
-          // updateAssignment();
-          // if (assignments) {
-          //      dispatch(updateAssignment(newAssignment));
-          //    } else {
-          //      dispatch(addAssignment(newAssignment)); 
-          //    }
-          dispatch(updateAssignment(newAssignment));
-         
+        
+          if (aid) {
+            dispatch(updateAssignment(newAssignment));
+          } else {
+            dispatch(addAssignment(newAssignment));
+          }
         };
         useEffect(() => {
           const assignment = assignments.find((a: any) => a._id === aid);
@@ -57,6 +68,7 @@ export default function AssignmentEditor(
             setUntil(assignment.getAvailableUntil);
           }
         }, [assignments, aid]);
+
 
      return (
           <div>
