@@ -136,8 +136,8 @@ export default function Kambaz() {
   // Function to delete a course (also removes it from the state)
   const deleteCourse = async (courseId: string) => {
     try {
-      // Call the backend API to delete the course
-      const status = await courseClient.deleteCourse(courseId);
+      // // Call the backend API to delete the course
+      // const status = await courseClient.deleteCourse(courseId);
       
       // If successful, filter out the deleted course from the local state
       setCourses(courses.filter((course) => course._id !== courseId));

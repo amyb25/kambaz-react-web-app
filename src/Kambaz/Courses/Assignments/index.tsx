@@ -7,7 +7,7 @@ import { IoEllipsisVertical } from "react-icons/io5";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addAssignment, deleteAssignment, setAssignments, updateAssignment } from "./reducer";
+import { addAssignment, deleteAssignment, setAssignments } from "./reducer";
 import { v4 as uuidv4 } from "uuid";
 import DeleteButton from "./DeleteButton";
 import * as coursesClient from "../client";
@@ -67,10 +67,10 @@ export default function Assignments() {
     dispatch(deleteAssignment(assignmentId));
   };
 
-  const saveAssignment = async (assignment: any) => {
-    await assignmentClient.updateAssignment(assignment);
-    dispatch(updateAssignment(assignment));
-  };
+  // const saveAssignment = async (assignment: any) => {
+  //   await assignmentClient.updateAssignment(assignment);
+  //   dispatch(updateAssignment(assignment));
+  // };
 
 
 
