@@ -11,8 +11,12 @@ export default function Dashboard({
   addCourse,
   deleteCourse,
   updateCourse,
+  enrolling,
+  setEnrolling,
+  updateEnrollment
 }: {
   courses: {
+    enrolled: any;
     image: string | undefined;
     _id: string;
     name: string;
@@ -23,6 +27,10 @@ export default function Dashboard({
   addCourse: (course: { _id: string; name: string; description: string }) => void;
   deleteCourse: (courseId: string) => void;
   updateCourse: (course: { _id: string; name: string; description: string }) => void;
+  enrolling: boolean;
+  setEnrolling: (enrolling: boolean) => void;
+  updateEnrollment: (courseId: string, enrolled: boolean) => void
+
 }) {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
@@ -39,7 +47,11 @@ export default function Dashboard({
 
   return (
     <div id="wd-dashboard">
-      <h1 id="wd-dashboard-title">Dashboard</h1>
+      <h1 id="wd-dashboard-title">Dashboard
+        <button onClick={() => setEnrolling(!enrolling)} className="float-end btn btn-primary" >
+          {enrolling ? "My Courses" : "All Courses"}
+        </button>
+      </h1>
       <hr />
       <h2 id="wd-dashboard-published">
         Published Courses ({courses.length})
@@ -81,19 +93,35 @@ export default function Dashboard({
           <hr />
 
           <Row xs={1} md={5} className="g-4">
-            {enrolledCourses.map((course) => (
+            {courses.map((course) => (
               <Col key={course._id} className="wd-dashboard-course" style={{ width: "300px" }}>
                 <Card>
                   <Link
                     to={`/Kambaz/Courses/${course._id}/Home`}
                     className="wd-dashboard-course-link text-decoration-none text-dark"
                   >
-                    <Card.Img src={course.image} variant="top" width="100%" height={160} />
+                    <Card.Img
+                      src="/images/reactjs.jpeg"
+                      variant="top"
+                      width="100%"
+                      height={160}
+                    />
                     <Card.Body className="card-body">
-                      <Card.Title className="wd-dashboard-course-title text-nowrap overflow-hidden">
+                      <Card.Title className="wd-dashboard-course-title text-nowrap overflow-hidden">{enrolling && (
+                        <button onClick={(event) => {
+                          event.preventDefault();
+                          updateEnrollment(course._id, !course.enrolled);
+                        }}
+                          className={`btn ${course.enrolled ? "btn-danger" : "btn-success"} float-end`} >
+                          {course.enrolled ? "Unenroll" : "Enroll"}
+                        </button>
+                      )}
                         {course.name}
                       </Card.Title>
-                      <Card.Text className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}>
+                      <Card.Text
+                        className="wd-dashboard-course-description overflow-hidden"
+                        style={{ height: "100px" }}
+                      >
                         {course.description}
                       </Card.Text>
                       <Button variant="primary">Go</Button>
@@ -123,6 +151,7 @@ export default function Dashboard({
               </Col>
             ))}
           </Row>
+
         </div>
       )}
 
@@ -139,23 +168,29 @@ export default function Dashboard({
           <div id="wd-dashboard-courses">
             <Row xs={1} md={5} className="g-4">
               {courses
-                .filter((course) => {
-                  // If showing all courses, no filtering
-                  if (showAllCourses) {
-                    return true; // Show all courses
-                  }
+                // .filter((course) => {
+                //   // If showing all courses, no filtering
+                //   if (showAllCourses) {
+                //     return true; // Show all courses
+                //   }
 
-                  // Otherwise, only show courses the current user is enrolled in
-                  return enrollments?.some(
-                    (enrollment: { user: string; course: string }) =>
-                      enrollment.user === currentUser._id && enrollment.course === course._id
-                  );
-                })
+                //   // Otherwise, only show courses the current user is enrolled in
+                //   return enrollments?.some(
+                //     (enrollment: { user: string; course: string }) =>
+                //       enrollment.user === currentUser._id && enrollment.course === course._id
+                //   );
+                // })
                 .map((course) => (
                   <Col className="wd-dashboard-course" style={{ width: "300px" }} key={course._id}>
                     <Card>
                       <Link to={`/Kambaz/Courses/${course._id}/Home`} className="wd-dashboard-course-link text-decoration-none text-dark">
-                        {<Card.Img src={course.image} variant="top" width="100%" height={160} />}
+                        {<Card.Img
+                          src="/images/reactjs.jpeg"
+                          variant="top"
+                          width="100%"
+                          height={160}
+                        />
+                        }
                         <Card.Body className="card-body">
                           <Card.Title className="wd-dashboard-course-title text-nowrap overflow-hidden">
                             {course.name}
