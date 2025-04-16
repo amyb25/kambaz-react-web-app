@@ -137,102 +137,102 @@ export default function Dashboard({
           </Button>
 
           <div id="wd-dashboard-courses">
-  <Row xs={1} md={5} className="g-4">
-    {courses
-      .filter((course) => {
-        // If showing all courses, no filtering
-        if (showAllCourses) {
-          return true; // Show all courses
-        }
+            <Row xs={1} md={5} className="g-4">
+              {courses
+                .filter((course) => {
+                  // If showing all courses, no filtering
+                  if (showAllCourses) {
+                    return true; // Show all courses
+                  }
 
-        // Otherwise, only show courses the current user is enrolled in
-        return enrollments?.some(
-          (enrollment: { user: string; course: string }) =>
-            enrollment.user === currentUser._id && enrollment.course === course._id
-        );
-      })
-      .map((course) => (
-        <Col className="wd-dashboard-course" style={{ width: "300px" }} key={course._id}>
-          <Card>
-            <Link to={`/Kambaz/Courses/${course._id}/Home`} className="wd-dashboard-course-link text-decoration-none text-dark">
-              {<Card.Img src={course.image} variant="top" width="100%" height={160} />}
-              <Card.Body className="card-body">
-                <Card.Title className="wd-dashboard-course-title text-nowrap overflow-hidden">
-                  {course.name}
-                </Card.Title>
-                <Card.Text className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}>
-                  {course.description}
-                </Card.Text>
-                <Button variant="primary">Go</Button>
+                  // Otherwise, only show courses the current user is enrolled in
+                  return enrollments?.some(
+                    (enrollment: { user: string; course: string }) =>
+                      enrollment.user === currentUser._id && enrollment.course === course._id
+                  );
+                })
+                .map((course) => (
+                  <Col className="wd-dashboard-course" style={{ width: "300px" }} key={course._id}>
+                    <Card>
+                      <Link to={`/Kambaz/Courses/${course._id}/Home`} className="wd-dashboard-course-link text-decoration-none text-dark">
+                        {<Card.Img src={course.image} variant="top" width="100%" height={160} />}
+                        <Card.Body className="card-body">
+                          <Card.Title className="wd-dashboard-course-title text-nowrap overflow-hidden">
+                            {course.name}
+                          </Card.Title>
+                          <Card.Text className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}>
+                            {course.description}
+                          </Card.Text>
+                          <Button variant="primary">Go</Button>
 
-                {enrollments.some(
-                  (enrollment: { user: string; course: string }) =>
-                    enrollment.user === currentUser._id && enrollment.course === course._id
-                ) ? (
-                  <Button
-                    variant="danger"
-                    onClick={() =>
-                      dispatch(
-                        deleteEnrollment(
-                          enrollments.find(
-                            (enrollment: { user: string; course: string; _id: string }) =>
+                          {enrollments.some(
+                            (enrollment: { user: string; course: string }) =>
                               enrollment.user === currentUser._id && enrollment.course === course._id
-                          )!._id
-                        )
-                      )
-                    }
-                    className="float-end"
-                  >
-                    Unenroll
-                  </Button>
-                ) : (
-                  <Button
-                    variant="success"
-                    onClick={() =>
-                      dispatch(
-                        addEnrollment({
-                          user: currentUser._id,
-                          course: course._id,
-                        })
-                      )
-                    }
-                    className="float-end"
-                  >
-                    Enroll
-                  </Button>
-                )}
+                          ) ? (
+                            <Button
+                              variant="danger"
+                              onClick={() =>
+                                dispatch(
+                                  deleteEnrollment(
+                                    enrollments.find(
+                                      (enrollment: { user: string; course: string; _id: string }) =>
+                                        enrollment.user === currentUser._id && enrollment.course === course._id
+                                    )!._id
+                                  )
+                                )
+                              }
+                              className="float-end"
+                            >
+                              Unenroll
+                            </Button>
+                          ) : (
+                            <Button
+                              variant="success"
+                              onClick={() =>
+                                dispatch(
+                                  addEnrollment({
+                                    user: currentUser._id,
+                                    course: course._id,
+                                  })
+                                )
+                              }
+                              className="float-end"
+                            >
+                              Enroll
+                            </Button>
+                          )}
 
-                {currentUser.role === "ADMIN" && (
-                  <>
-                    <Button
-                      variant="danger"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        deleteCourse(course._id);
-                      }}
-                      className="float-end"
-                    >
-                      Delete
-                    </Button>
-                    <Button
-                      variant="warning"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setCourse(course);
-                      }}
-                      className="float-end me-2"
-                    >
-                      Edit
-                    </Button>
-                  </>
-                )}
-              </Card.Body>
-            </Link>
-          </Card>
-        </Col>
-      ))}
-  </Row>
-</div>
+                          {currentUser.role === "ADMIN" && (
+                            <>
+                              <Button
+                                variant="danger"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  deleteCourse(course._id);
+                                }}
+                                className="float-end"
+                              >
+                                Delete
+                              </Button>
+                              <Button
+                                variant="warning"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setCourse(course);
+                                }}
+                                className="float-end me-2"
+                              >
+                                Edit
+                              </Button>
+                            </>
+                          )}
+                        </Card.Body>
+                      </Link>
+                    </Card>
+                  </Col>
+                ))}
+            </Row>
+          </div>
         </>
       )}
     </div>
