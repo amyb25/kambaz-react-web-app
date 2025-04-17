@@ -200,43 +200,24 @@ export default function Dashboard({
                           </Card.Text>
                           <Button variant="primary">Go</Button>
 
-                          {enrollments.some(
-                            (enrollment: { user: string; course: string }) =>
-                              enrollment.user === currentUser._id && enrollment.course === course._id
-                          ) ? (
-                            <Button
-                              variant="danger"
-                              onClick={() =>
-                                dispatch(
-                                  deleteEnrollment(
-                                    enrollments.find(
-                                      (enrollment: { user: string; course: string; _id: string }) =>
-                                        enrollment.user === currentUser._id && enrollment.course === course._id
-                                    )!._id
-                                  )
-                                )
-                              }
-                              className="float-end"
-                            >
+                          {course.enrolled ? (
+
+                            <Button variant="danger" onClick={(event) => {
+                              event.preventDefault();
+                              updateEnrollment(course._id, false);
+                            }} className="float-end">
                               Unenroll
                             </Button>
                           ) : (
-                            <Button
-                              variant="success"
-                              onClick={() =>
-                                dispatch(
-                                  addEnrollment({
-                                    user: currentUser._id,
-                                    course: course._id,
-                                  })
-                                )
-                              }
-                              className="float-end"
-                            >
+                            <Button variant="success" onClick={(event) => {
+                              event.preventDefault();
+                              updateEnrollment(course._id, true);
+                            }} className="float-end">
                               Enroll
                             </Button>
-                          )}
+                          )
 
+                          }
                           {currentUser.role === "ADMIN" && (
                             <>
                               <Button
